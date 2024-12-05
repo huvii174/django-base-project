@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Admin Dashboard</title>
+</head>
+<body>
+    <h2>Admin Dashboard</h2>
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+    <h3>Viewers List</h3>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+        </tr>
+        {% for viewer in viewers %}
+        <tr>
+            <td>{{ viewer.id }}</td>
+            <td>{{ viewer.username }}</td>
+            <td>{{ viewer.email }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="3">No viewers found.</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h3>Add Viewer</h3>
+    <form method="post">
+        {% csrf_token %}
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" required><br>
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" required><br>
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" required><br>
+        <button type="submit">Add Viewer</button>
+    </form>
+</body>
+</html>

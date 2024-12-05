@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Super Admin Dashboard</title>
+</head>
+<body>
+    <h2>Super Admin Dashboard</h2>
+    {% if error %}
+        <p style="color: red;">{{ error }}</p>
+    {% endif %}
+    <h3>Admin Users List</h3>
+    <table border="1">
+        <tr>
+            <th>ID</th>
+            <th>Username</th>
+            <th>Email</th>
+            <th>Role</th>
+        </tr>
+        {% for admin_user in admin_users %}
+        <tr>
+            <td>{{ admin_user.id }}</td>
+            <td>{{ admin_user.username }}</td>
+            <td>{{ admin_user.email }}</td>
+            <td>{{ admin_user.get_role_display }}</td>
+        </tr>
+        {% empty %}
+        <tr>
+            <td colspan="4">No admin users found.</td>
+        </tr>
+        {% endfor %}
+    </table>
+
+    <h3>Add Admin or Super Admin</h3>
+    <form method="post">
+        {% csrf_token %}
+        <label for="username">Username:</label>
+        <input type="text" name="username" id="username" required><br>
+        <label for="password">Password:</label>
+        <input type="password" name="password" id="password" required><br>
+        <label for="email">Email:</label>
+        <input type="email" name="email" id="email" required><br>
+        <label for="role">Role:</label>
+        <select name="role" id="role" required>
+            <option value="admin">Admin</option>
+            <option value="super_admin">Super Admin</option>
+        </select><br>
+        <button type="submit">Add User</button>
+    </form>
+</body>
+</html>
